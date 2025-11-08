@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retell Hair Collection</title>
+
+<!-- Embedded CSS -->
+<style>
+/* General */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #fff0f5;
+  color: #333;
+  scroll-behavior: smooth;
+}
+
+/* Header & Logo */
+header {
+  background-color: #ff69b4;
+  padding: 20px 0;
+  text-align: center;
+}
+.logo-container .logo {
+  height: 140px;
+  border-radius: 18px;
+  border: 3px solid gold;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(0.7);
+  animation: logoZoom 1s ease forwards;
+}
+.logo-container h1 {
+  margin: 10px 0 0 0;
+  font-size: 2rem;
+  color: #ff1493;
+  font-weight: bold;
+}
+.logo-container .slogan {
+  margin-top: 12px;
+  font-family: 'Brush Script MT','Segoe Script',cursive;
+  font-size: 1.4rem;
+  color: #fff;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+}
+
+/* Navigation */
+nav {
+  background: gold;
+  text-align: center;
+  padding: 10px 0;
+}
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+nav a:hover {
+  color: #ff1493;
+}
+
+/* Sections */
+section {
+  padding: 40px 20px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease-out;
+}
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slideshow Gallery */
+.carousel-container {
+  position: relative;
+  max-width: 200px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+.carousel-slide {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.carousel-slide img {
+  min-width: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,215,0,0.8);
+  border: none;
+  font-size: 2rem;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+#prevSlide { left: 10px; }
+#nextSlide { right: 10px; }
+
+/* Lightbox */
+#lightbox {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 999;
+}
+#lightbox img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+#lightbox .controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}
+#lightbox button {
+  background: gold;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#lightbox button:hover {
+  background: #ff1493;
+  color: #fff;
+}
+
+/* Products Table */
+#products table {
+  width: 90%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  border: 4px solid gold;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  background: #fff0f5;
+}
+#products th, #products td {
+  padding: 12px;
+  border-bottom: 2px solid gold;
+}
+#products th {
+  background: #ff69b4;
+  color: white;
+  font-size: 1.1rem;
+}
+#products td img {
+  width: 50px;
+  border-radius: 8px;
+}
+#products tr:hover {
+  background: rgba(255, 215, 0, 0.2);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
+/* Booking Form */
+form {
+  max-width: 200px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+form input, form select, form button {
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid gold;
+  font-size: 1rem;
+}
+form button {
+  background: #ff69b4;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: .3s;
+}
+form button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px gold,0 0 30px rgba(255,215,0,.5);
+}
+
+/* Map */
+.map-container {
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  border: 4px solid gold;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  height: 400px;
+}
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 15px;
+}
+
+/* Floating WhatsApp + Facebook */
+.floating-social {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 12px;
+  z-index: 1000;
+}
+.social-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.social-btn:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 15px gold, 0 0 25px rgba(255,215,0,0.6);
+}
+.whatsapp-btn { background: #25D366; }
+.facebook-btn { background: #1877F2; }
+
+/* Footer */
+footer {
+  background: #ff69b4;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* Hamburger Side Menu */
+#sideMenuBtn {
+  font-size: 30px;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  color: #ff1493;
+  background: gold;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,105,180,0.95);
+  overflow-x: hidden;
+  transition: 0.4s;
+  padding-top: 60px;
+  z-index: 1002;
+  backdrop-filter: blur(8px);
+}
+.side-menu a {
+  display: block;
+  padding: 15px 30px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: white;
+  transition: 0.3s;
+}
+.side-menu a:hover { color: gold; }
+.overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  background: rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  transition: 0.4s;
+}
+
+/* Animations */
+@keyframes logoZoom {
+  0% { opacity:0; transform:scale(0.7);}
+  100% { opacity:1; transform:scale(1);}
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .carousel-slide img { width: 100%; }
+  form input, form select { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hamburger -->
+<div id="sideMenuBtn">&#9776;</div>
+
+<!-- Side Menu -->
+<div id="sideMenu" class="side-menu">
+  <a href="#home">Home</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#products">Products</a>
+  <a href="#booking">Booking</a>
+  <a href="#contact">Contact</a>
+</div>
+<div id="menuOverlay" class="overlay"></div>
+
+<header class="logo-container">
+  <img class="logo" src="img/your-image3.jpg" alt="Logo">
+  <h1>Retell Hair Collection</h1>
+  <p class="slogan">Confidence starts with great hair</p>
+</header>
+
+
+<section id="home">
+  <h1>Welcome to Retell Hair Collection</h1>
+  <p>We offer the best quality hair for your beauty and confidence.</p>
+</section>
+
+<section id="gallery">
+  <h2>Gallery</h2>
+  <div class="carousel-container">
+    <div class="carousel-slide" id="carouselSlide">
+      <img src="img/your-image1.jpg" alt="Hair 1">
+      <img src="img/your-image2.jpg" alt="Hair 2">
+      <img src="img/your-image3.jpg" alt="Hair 3">
+      <img src="img/your-image4.jpg" alt="Hair 4">
+    </div>
+    <button id="prevSlide" class="slide-btn">&#10094;</button>
+    <button id="nextSlide" class="slide-btn">&#10095;</button>
+  </div>
+</section>
+
+<section id="products">
+  <h2>Products / Price List</h2>
+  <table>
+    <tr><th>Product</th><th>Image</th><th>Length</th><th>Price</th></tr>
+    <tr><td>Straight Wig</td><td><img src="img/your-image3.jpg" alt="Straight Wig"></td><td>12"-30"</td><td>R1400-R2800</td></tr>
+    <tr><td>Body Wave Wig</td><td><img src="img/your-image2.jpg" alt="Body Wave Wig"></td><td>14"-28"</td><td>R1600-R3200</td></tr>
+    <tr><td>Bob Wig</td><td><img src="img/your-image1.jpg" alt="Bob Wig"></td><td>10"-16"</td><td>R650-R1400</td></tr>
+       <tr><td>installation</td><td><img src="img/your-image4.jpg" alt="weave installation"></
+td><td>10"-30"</td><td>R150-R200</td><</tr>
+  </table>
+</section>
+
+<section id="booking">
+  <h2>Book an Appointment</h2>
+  <form id="bookingForm">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <select name="service">
+      <option>Weave Installation</option>
+      <option>Weave Styling</option>
+      <option>Hair Treatment</option>
+      <option>weave purchase</option>
+    </select>
+    <input type="date" name="date" required>
+    <button type="submit">Send Booking Request</button>
+  </form>
+</section>
+
+<section id="contact">
+  <h2>Contact & Location</h2>
+  <p>WhatsApp: <strong>0673300698</strong></p>
+  <div class="map-container">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6450.0000000000005!2d29.98682!3d-24.79078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9c925d00000001%3A0x0000000000000000!2sGa-Mogashoa%2C%20Limpopo%2C%20South%20Africa!5e0!3m2!1sen!2sza!4v1700XXXXXXX!5m2!1sen!2sza" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <img src="" alt="Preview">
+  <div class="controls">
+    <button id="prev">Prev</button>
+    <button id="next">Next</button>
+    <button id="close">Close</button>
+  </div>
+</div>
+
+<!-- Floating Social -->
+<div class="floating-social">
+  <a href="https://wa.me/27673300698" target="_blank" class="social-btn whatsapp-btn">
+    <img src="img/whatsapp-icon.png" width="35" height="35" alt="WhatsApp">
+  </a>
+  <a href="https://www.facebook.com/RetellTeeriana" target="_blank" class="social-btn facebook-btn">
+    <img src="img/facebook-icon.png" width="35" height="35" alt="Facebook">
+  </a>
+</div>
+
+<footer>
+  <p>&copy; 2025 Retell Hair Collection. All Rights Reserved.</p>
+</footer>
+
+<!-- Embedded JS -->
+<script>
+// Scroll reveal
+const sections = document.querySelectorAll('section');
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{ if(entry.isIntersecting) entry.target.classList.add('visible'); });
+},{threshold:0.2});
+sections.forEach(section=>observer.observe(section));
+
+// Booking WhatsApp
+const form = document.getElementById('bookingForm');
+form.addEventListener('submit', e=>{
+  e.preventDefault();
+  const name=form.name.value.trim();
+  const service=form.service.value;
+  const date=form.date.value;
+  const msg=`Hi Retell Hair Collection, my name is ${name}. I would like to book a ${service} on ${date}.`;
+  window.open(`https://wa.me/27673300698?text=${encodeURIComponent(msg)}`,'_blank');
+});
+
+// Lightbox
+const galleryImages = document.querySelectorAll('#carouselSlide img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('img');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const closeBtn = document.getElementById('close');
+let currentIndex = 0;
+function showLightbox(index){
+  currentIndex = index;
+  lightboxImg.src = galleryImages[index].src;
+  lightbox.style.display='flex';
+}
+galleryImages.forEach((img, i) => img.addEventListener('click', () => showLightbox(i)));
+prevBtn.addEventListener('click', ()=>{currentIndex=(currentIndex-1+galleryImages.length)%galleryImages.length;lightboxImg.src=galleryImages[currentIndex].src;});
+nextBtn.addEventListener('click', ()=>{currentIndex=(currentIndex+1)%galleryImages.length;lightboxImg.src=galleryImages[currentIndex].src;});
+closeBtn.addEventListener('click', ()=>lightbox.style.display='none');
+
+// Side menu
+const sideMenuBtn = document.getElementById('sideMenuBtn');
+const sideMenu = document.getElementById('sideMenu');
+const menuOverlay = document.getElementById('menuOverlay');
+sideMenuBtn.addEventListener('click', () => { sideMenu.style.width = "250px"; menuOverlay.style.display = "block"; });
+menuOverlay.addEventListener('click', () => { sideMenu.style.width = "0"; menuOverlay.style.display = "none"; });
+
+// Slideshow
+const carouselSlide = document.getElementById('carouselSlide');
+const carouselImages = document.querySelectorAll('#carouselSlide img');
+const prevSlide = document.getElementById('prevSlide');
+const nextSlide = document.getElementById('nextSlide');
+let counter = 0;
+function showSlide(index){
+  if(index < 0) counter = carouselImages.length - 1;
+  else if(index >= carouselImages.length) counter = 0;
+  else counter = index;
+  carouselSlide.style.transform = `translateX(-${counter * 100}%)`;
+}
+nextSlide.addEventListener('click', () => showSlide(counter + 1));
+prevSlide.addEventListener('click', () => showSlide(counter - 1));
+
+// Logo animation
+window.addEventListener('load',()=>{document.querySelector('.logo').classList.add('show');});
+</script>
+
+</body>
+</html>
